@@ -22,17 +22,17 @@ mainPageController = (function () {
                     roadDifficulty: 0
                 },
                 computed: {
-                    trafficDensityHighOptionLabel: function(){
-                      switch(parseInt(this.roadCategory)){
-                          case 0:
-                              return "Visoka (> 45% max zmogljivosti)";
-                          case 1:
-                              return "Visoka (> 65% max zmogljivosti)";
-                      }
+                    trafficDensityHighOptionLabel: function () {
+                        switch (parseInt(this.roadCategory)) {
+                            case 0:
+                                return "Visoka (> 45% max zmogljivosti)";
+                            case 1:
+                                return "Visoka (> 65% max zmogljivosti)";
+                        }
                         return "";
                     },
-                    trafficDensityMediumOptionLabel: function(){
-                        switch(parseInt(this.roadCategory)){
+                    trafficDensityMediumOptionLabel: function () {
+                        switch (parseInt(this.roadCategory)) {
                             case 0:
                                 return "Zmerna (15% do 45% max zmogljivosti)";
                             case 1:
@@ -40,8 +40,8 @@ mainPageController = (function () {
                         }
                         return "";
                     },
-                    trafficDensityLowOptionLabel: function(){
-                        switch(parseInt(this.roadCategory)){
+                    trafficDensityLowOptionLabel: function () {
+                        switch (parseInt(this.roadCategory)) {
                             case 0:
                                 return "Nizka (< 15% max zmogljivosti)";
                             case 1:
@@ -130,8 +130,56 @@ mainPageController = (function () {
                             this.hasParkedVehiclesScore +
                             this.ambientLightScore +
                             this.roadDifficultyScore;
-                    }
+                    },
+                    mClassStr: function () {
+                        if (this.totalScore >= 1 && this.totalScore <= 6) {
 
+                            var result = '<table class="table table-striped table-condensed table-hover"><thead><tr>';
+                            result += '<th>' + "Razred" + '</th>';
+                            result += '<th><i>L<sub>w</sub></i></th>';
+                            result += '<th><i>U<sub>O</sub></i></th>';
+                            result += '<th><i>U<sub>I</sub></i></th>';
+                            result += '<th><i>TI</i></th>';
+                            result += '<th><i>K<sub>O</sub></i></th>';
+                            result += "</tr></thead>";
+                            result += "<tbody>";
+
+                            if(this.totalScore == 1){
+                                result += "<tr><td><b>M1</b></td><td>2,0</td><td>0,4</td><td>0,7</td><td>10</td><td>0,5</td></tr>";
+                            }
+
+                            if(this.totalScore == 2){
+                                result += "<tr><td><b>M2</b></td><td>1,5</td><td>0,4</td><td>0.7</td><td>10</td><td>0,5</td></tr>";
+                            }
+
+                            if(this.totalScore == 3){
+                                result += "<tr><td><b>M3a</b></td><td>1,0</td><td>0,4</td><td>0.7</td><td>15</td><td>0,5</td></tr>";
+                                result += "<tr><td><b>M3b</b></td><td>1,0</td><td>0,4</td><td>0.6</td><td>15</td><td>0,5</td></tr>";
+                                result += "<tr><td><b>M3c</b></td><td>1,0</td><td>0,4</td><td>0.5</td><td>15</td><td>0,5</td></tr>";
+                            }
+
+                            if(this.totalScore == 4){
+                                result += "<tr><td><b>M4a</b></td><td>0,75</td><td>0,4</td><td>0.6</td><td>15</td><td>0,5</td></tr>";
+                                result += "<tr><td><b>M4b</b></td><td>0,75</td><td>0,4</td><td>0.5</td><td>15</td><td>0,5</td></tr>";
+                            }
+
+                            if(this.totalScore == 5){
+                                result += "<tr><td><b>M5</b></td><td>0,5</td><td>0,35</td><td>0.4</td><td>15</td><td>0,5</td></tr>";
+                            }
+
+                            if(this.totalScore == 6){
+                                result += "<tr><td><b>M6</b></td><td>0,3</td><td>0,35</td><td>0.4</td><td>15</td><td>-</td></tr>";
+                            }
+
+                            result += "</tbody>";
+                            result += "</table>";
+                            return result;
+                        } else {
+                            return '<span class="glyphicon glyphicon-alert text-danger"></span> Vrednost parametrov ni primerna za razred razsvetljave M'
+                        }
+
+                        return result;
+                    }
                 }
             });
         };

@@ -16,7 +16,7 @@
 		<div class="navbar-header">
 			<div class="navbar-brand">
 				<div id="page_title">
-					Določitev razreda razsvetljave
+					Določitev M razreda razsvetljave
 				</div>
 			</div>
 		</div>
@@ -208,8 +208,11 @@
 
 	<div class="form-group">
 		<div class="row vertical-align">
-			<div class="col-xs-10">
-
+			<div class="col-xs-2">
+				<b>Rezultat (M razred):</b>
+			</div>
+			<div class="col-xs-8">
+				<span v-html="mClassStr"></span>
 			</div>
 			<div class="col-xs-2 center-middle">
 				<span> Skupaj</span><br>
@@ -234,6 +237,5 @@
 <script src="libs/lodash.min.js"></script>
 
 <script src="mainPageController.js"></script>
-<script src="model/trackingLocationRecord.js"></script>
 
 </html>
