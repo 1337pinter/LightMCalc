@@ -33,138 +33,201 @@
 	</div>
 </div>
 
-<div id="page_history">
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-6">
-				Vozilo
-			</div>
-			<div class="col-xs-6">
-				<select id="page_history_object_list" class="form-control"></select>
-			</div>
-		</div>
+<div id="app">
+	<div class="section-title">
+		<b>Vnos vhodnih parametrov</b>
 	</div>
 
 	<div class="form-group">
 		<div class="row vertical-align">
-			<div class="col-xs-6">
-				Filter
+			<div class="col-xs-2">
+				Število pasov
 			</div>
-			<div class="col-xs-6">
-				<select id="page_history_filter" class="form-control">
-					<option value="0" selected>&nbsp;</option>
-					<option value="1">Zadnjo uro</option>
-					<option value="2">Danes</option>
-					<option value="3">Včeraj</option>
-					<option value="4">Pred 2 dnevoma</option>
-					<option value="5">Pred 3 dnevi</option>
-					<option value="6">Trenutni teden</option>
-					<option value="7">Pretekli teden</option>
-					<option value="8">Trenutni mesec</option>
-					<option value="9">Pretekli mesec</option>
+			<div class="col-xs-10">
+				<select class="form-control" v-model="roadCategory" required>
+					<option value="0">Dvopasovna cesta</option>
+					<option value="1">Avtocesta oz. večpasovna cesta</option>
 				</select>
 			</div>
 		</div>
 	</div>
 
-	<div class="row vertical-align">
-		<div class="col-xs-6">
-			Od dne
+	<div class="form-group">
+		<div class="row vertical-align">
+			<div class="col-xs-2">
+				Omejitev hitrosti
+			</div>
+			<div class="col-xs-8">
+				<select class="form-control" v-model="speedLimit" required>
+					<option value="0">Zelo visoka (v &ge; 100 km/h)</option>
+					<option value="1">Visoka (70 < v < 100 km/h)</option>
+					<option value="2">Zmerna (40 < v < 70 km/h</option>
+					<option value="3">Nizka (v &le; 40 km/h)</option>
+				</select>
+			</div>
+			<div class="col-xs-2 center-middle">
+				<span> Težna vrednost</span><br>
+				<b>{{ speedLimitScore }}</b>
+			</div>
 		</div>
-		<div class="col-xs-6">
-			<div class="form-group">
-				<div class="input-group date">
-					<input type="text" class="form-control" data-field="datetime" id="page_history_date_from"
-					       readonly="readonly"/>
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</span>
+	</div>
+
+	<div class="form-group">
+		<div class="row vertical-align">
+			<div class="col-xs-2">
+				Gostota prometa
+			</div>
+			<div class="col-xs-8">
+				<select class="form-control" v-model="trafficDensity" required>
+					<option value="0">{{ trafficDensityHighOptionLabel }}</option>
+					<option value="1">{{ trafficDensityMediumOptionLabel }}</option>
+					<option value="2">{{ trafficDensityLowOptionLabel }}</option>
+				</select>
+			</div>
+			<div class="col-xs-2 center-middle">
+				<b>{{ trafficDensityScore }}</b>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="row vertical-align">
+			<div class="col-xs-2">
+				Sestava prometa
+			</div>
+			<div class="col-xs-8">
+				<select class="form-control" v-model="trafficConstitution" required>
+					<option value="0">Mešana z visoko vsebino nemotornih vozil</option>
+					<option value="1">Mešana</option>
+					<option value="2">Samo motorna</option>
+				</select>
+			</div>
+			<div class="col-xs-2 center-middle">
+				<b>{{ trafficConstitutionScore }}</b>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="row vertical-align">
+			<div class="col-xs-2">
+				Ločitev vozišča
+			</div>
+			<div class="col-xs-8">
+				<input id="cb1" type="checkbox" name="fancy-checkbox-default" autocomplete="off" v-model="laneSep">
+
+				<div class="btn-group">
+					<label for="cb1" class="btn btn-default">
+						<span class="glyphicon glyphicon-ok"></span>
+						<span> </span>
+					</label>
 				</div>
 			</div>
+			<div class="col-xs-2 center-middle">
+				<b>{{ laneSepScore }}</b>
+			</div>
 		</div>
 	</div>
 
-	<div class="row vertical-align">
-		<div class="col-xs-6">
-			Do dne
+	<div class="form-group">
+		<div class="row vertical-align">
+			<div class="col-xs-2">
+				Gostota prehodov čez cesto
+			</div>
+			<div class="col-xs-8">
+				<select class="form-control" v-model="crossingDensity" required>
+					<option value="0">Visoka (> 3 križišča / km in < 3 km med mostovi)</option>
+					<option value="1">Zmerna (&le; 3 križišča / km in &ge; 3 km med mostovi)</option>
+				</select>
+			</div>
+			<div class="col-xs-2 center-middle">
+				<b>{{ crossingDensityScore }}</b>
+			</div>
 		</div>
-		<div class="col-xs-6">
-			<div class="form-group">
-				<div class="input-group date">
-					<input type="text" class="form-control" data-field="datetime" id="page_history_date_to"
-					       readonly="readonly"/>
-					<span class="input-group-addon">
-						<span class="glyphicon glyphicon-calendar"></span>
-					</span>
+	</div>
+
+	<div class="form-group">
+		<div class="row vertical-align">
+			<div class="col-xs-2">
+				Vsebuje parkirana vozila
+			</div>
+			<div class="col-xs-8">
+				<input id="cb2" type="checkbox" name="fancy-checkbox-default" autocomplete="off"
+				       v-model="hasParkedVehicles">
+
+				<div class="btn-group">
+					<label for="cb2" class="btn btn-default">
+						<span class="glyphicon glyphicon-ok"></span>
+						<span> </span>
+					</label>
 				</div>
 			</div>
+			<div class="col-xs-2 center-middle">
+				<b>{{ hasParkedVehiclesScore }}</b>
+			</div>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<div class="row vertical-align">
-			<div class="col-xs-6">
-				Trajanje dogodkov
+			<div class="col-xs-2">
+				Ambientna svetilnost
 			</div>
-			<div class="col-xs-6">
-				<select id="page_history_stop_duration" class="form-control"
-				        onChange="poligram.app.tracking.mainPageController.defaultInstance().historyRouteToggleStops();">
-					<option value="0">> 0 min</option>
-					<option value="1">> 1 min</option>
-					<option value="2">> 2 min</option>
-					<option value="5">> 5 min</option>
-					<option value="10">> 10 min</option>
-					<option value="20">> 20 min</option>
-					<option value="30">> 30 min</option>
-					<option value="60">> 1 h</option>
-					<option value="120">> 2 h</option>
-					<option value="300">> 5 h</option>
+			<div class="col-xs-8">
+				<select class="form-control" v-model="ambientLight" required>
+					<option value="0">Visoka</option>
+					<option value="1">Zmerna</option>
+					<option value="2">Nizka</option>
 				</select>
 			</div>
+			<div class="col-xs-2 center-middle">
+				<b>{{ ambientLightScore }}</b>
+			</div>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<div class="row vertical-align">
-			<div class="col-xs-6">
-				Prikaži postanke
+			<div class="col-xs-2">
+				Naloga poti/ceste
 			</div>
-			<div class="col-xs-6">
-				<select id="page_history_stops" class="form-control"
-				        onChange="poligram.app.tracking.mainPageController.defaultInstance().historyRouteToggleStops();">
-					<option value="false">Ne</option>
-					<option value="true" selected>Da</option>
+			<div class="col-xs-8">
+				<select class="form-control" v-model="roadDifficulty" required>
+					<option value="0">Zelo zahtevno</option>
+					<option value="1">Zahtevno</option>
+					<option value="2">Enostavno</option>
 				</select>
 			</div>
+			<div class="col-xs-2 center-middle">
+				<b>{{ roadDifficultyScore }}</b>
+			</div>
 		</div>
 	</div>
+
+	<hr>
 
 	<div class="form-group">
 		<div class="row vertical-align">
-			<div class="col-xs-6">
-				<button type="button" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false"
-				        onClick="poligram.app.tracking.mainPageController.defaultInstance().historyLoadRoute();">
-					Prikaži
-				</button>
+			<div class="col-xs-10">
+
 			</div>
-			<div class="col-xs-6">
-				<button type="button" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false"
-				        onClick="poligram.app.tracking.mainPageController.defaultInstance().historyHideRoute();">
-					Skrij
-				</button>
+			<div class="col-xs-2 center-middle">
+				<span> Skupaj</span><br>
+				<b>{{ totalScore }}</b>
 			</div>
 		</div>
 	</div>
 
-	<a href="#" class="btn btn-default btn-blue show-menu pull-left back-btn"
-	   onclick="poligram.app.tracking.mainPageController.defaultInstance().switchPage('menu');">
-		<i class="glyphicon glyphicon-menu-left"></i>
-		Nazaj
-	</a>
+	<!--<a href="#" class="btn btn-default btn-blue show-menu pull-left calc-btn">
+		<i class="fa fa-calculator"></i>
+		Izračunaj razred
+	</a>-->
+
 </div>
 
 </body>
 
+<script src="libs/vue.js"></script>
 <script src="libs/jquery.min.js"></script>
 <script src="libs/bootstrap/bootstrap.min.js"></script>
 <script src="libs/bootbox.min.js"></script>
