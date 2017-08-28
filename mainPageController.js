@@ -133,7 +133,6 @@ mainPageController = (function () {
                     },
                     mClassNo: function () {
                         var finalVWS = this.vws;
-                        debugger;
 
                         if (finalVWS < 0) {
                             finalVWS = 0;
