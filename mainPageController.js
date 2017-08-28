@@ -121,7 +121,7 @@ mainPageController = (function () {
                         }
                         return 0;
                     },
-                    totalScore: function () {
+                    vws: function () {
                         return this.speedLimitScore +
                             this.trafficDensityScore +
                             this.trafficConstitutionScore +
@@ -131,8 +131,24 @@ mainPageController = (function () {
                             this.ambientLightScore +
                             this.roadDifficultyScore;
                     },
+                    mClassNo: function () {
+                        var finalVWS = this.vws;
+                        debugger;
+
+                        if (finalVWS < 0) {
+                            finalVWS = 0;
+                        }
+
+                        var classNo = 6 - finalVWS;
+
+                        if (classNo <= 0)
+                            return 1;
+
+                        return classNo;
+                    },
                     mClassStr: function () {
-                        if (this.totalScore >= 1 && this.totalScore <= 6) {
+
+                        if (this.mClassNo >= 1 && this.mClassNo <= 6) {
 
                             var result = '<table class="table table-striped table-condensed table-hover"><thead><tr>';
                             result += '<th>' + "Razred" + '</th>';
@@ -144,30 +160,30 @@ mainPageController = (function () {
                             result += "</tr></thead>";
                             result += "<tbody>";
 
-                            if(this.totalScore == 1){
+                            if (this.mClassNo == 1) {
                                 result += "<tr><td><b>M1</b></td><td>2,0</td><td>0,4</td><td>0,7</td><td>10</td><td>0,5</td></tr>";
                             }
 
-                            if(this.totalScore == 2){
+                            if (this.mClassNo == 2) {
                                 result += "<tr><td><b>M2</b></td><td>1,5</td><td>0,4</td><td>0.7</td><td>10</td><td>0,5</td></tr>";
                             }
 
-                            if(this.totalScore == 3){
+                            if (this.mClassNo == 3) {
                                 result += "<tr><td><b>M3a</b></td><td>1,0</td><td>0,4</td><td>0.7</td><td>15</td><td>0,5</td></tr>";
                                 result += "<tr><td><b>M3b</b></td><td>1,0</td><td>0,4</td><td>0.6</td><td>15</td><td>0,5</td></tr>";
                                 result += "<tr><td><b>M3c</b></td><td>1,0</td><td>0,4</td><td>0.5</td><td>15</td><td>0,5</td></tr>";
                             }
 
-                            if(this.totalScore == 4){
+                            if (this.mClassNo == 4) {
                                 result += "<tr><td><b>M4a</b></td><td>0,75</td><td>0,4</td><td>0.6</td><td>15</td><td>0,5</td></tr>";
                                 result += "<tr><td><b>M4b</b></td><td>0,75</td><td>0,4</td><td>0.5</td><td>15</td><td>0,5</td></tr>";
                             }
 
-                            if(this.totalScore == 5){
+                            if (this.mClassNo == 5) {
                                 result += "<tr><td><b>M5</b></td><td>0,5</td><td>0,35</td><td>0.4</td><td>15</td><td>0,5</td></tr>";
                             }
 
-                            if(this.totalScore == 6){
+                            if (this.mClassNo == 6) {
                                 result += "<tr><td><b>M6</b></td><td>0,3</td><td>0,35</td><td>0.4</td><td>15</td><td>-</td></tr>";
                             }
 
