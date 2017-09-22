@@ -16,7 +16,7 @@
 		<div class="navbar-header">
 			<div class="navbar-brand">
 				<div id="page_title">
-					Določitev M razreda razsvetljave
+					Določitev M in C razreda razsvetljave
 				</div>
 			</div>
 		</div>
@@ -65,9 +65,13 @@
 					<option value="3">Nizka (v &le; 40 km/h)</option>
 				</select>
 			</div>
-			<div class="col-xs-2 center-middle">
-				<span> Težna vrednost</span><br>
-				<b>{{ speedLimitScore }}</b>
+			<div class="col-xs-1 center-middle">
+				<span> VWS (M)</span><br>
+				<b>{{ mSpeedLimitScore }}</b>
+			</div>
+			<div class="col-xs-1 center-middle">
+				<span> VWS (C)</span><br>
+				<b>{{ cSpeedLimitScore }}</b>
 			</div>
 		</div>
 	</div>
@@ -84,8 +88,11 @@
 					<option value="2">{{ trafficDensityLowOptionLabel }}</option>
 				</select>
 			</div>
-			<div class="col-xs-2 center-middle">
-				<b>{{ trafficDensityScore }}</b>
+			<div class="col-xs-1 center-middle">
+				<b>{{ mTrafficDensityScore }}</b>
+			</div>
+			<div class="col-xs-1 center-middle">
+				<b>{{ cTrafficDensityScore }}</b>
 			</div>
 		</div>
 	</div>
@@ -102,8 +109,11 @@
 					<option value="2">Samo motorna</option>
 				</select>
 			</div>
-			<div class="col-xs-2 center-middle">
-				<b>{{ trafficConstitutionScore }}</b>
+			<div class="col-xs-1 center-middle">
+				<b>{{ mTrafficConstitutionScore }}</b>
+			</div>
+			<div class="col-xs-1 center-middle">
+				<b>{{ cTrafficConstitutionScore }}</b>
 			</div>
 		</div>
 	</div>
@@ -123,8 +133,11 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-2 center-middle">
-				<b>{{ laneSepScore }}</b>
+			<div class="col-xs-1 center-middle">
+				<b>{{ mLaneSepScore }}</b>
+			</div>
+			<div class="col-xs-1 center-middle">
+				<b>{{ cLaneSepScore }}</b>
 			</div>
 		</div>
 	</div>
@@ -140,8 +153,10 @@
 					<option value="1">Zmerna (&le; 3 križišča / km in &ge; 3 km med mostovi)</option>
 				</select>
 			</div>
-			<div class="col-xs-2 center-middle">
-				<b>{{ crossingDensityScore }}</b>
+			<div class="col-xs-1 center-middle">
+				<b>{{ mCrossingDensityScore }}</b>
+			</div>
+			<div class="col-xs-1 center-middle">
 			</div>
 		</div>
 	</div>
@@ -162,8 +177,11 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-2 center-middle">
-				<b>{{ hasParkedVehiclesScore }}</b>
+			<div class="col-xs-1 center-middle">
+				<b>{{ mHasParkedVehiclesScore }}</b>
+			</div>
+			<div class="col-xs-1 center-middle">
+				<b>{{ cHasParkedVehiclesScore }}</b>
 			</div>
 		</div>
 	</div>
@@ -180,8 +198,11 @@
 					<option value="2">Nizka</option>
 				</select>
 			</div>
-			<div class="col-xs-2 center-middle">
-				<b>{{ ambientLightScore }}</b>
+			<div class="col-xs-1 center-middle">
+				<b>{{ mAmbientLightScore }}</b>
+			</div>
+			<div class="col-xs-1 center-middle">
+				<b>{{ cAmbientLightScore }}</b>
 			</div>
 		</div>
 	</div>
@@ -198,8 +219,11 @@
 					<option value="2">Enostavno</option>
 				</select>
 			</div>
-			<div class="col-xs-2 center-middle">
-				<b>{{ roadDifficultyScore }}</b>
+			<div class="col-xs-1 center-middle">
+				<b>{{ mRoadDifficultyScore }}</b>
+			</div>
+			<div class="col-xs-1 center-middle">
+				<b>{{ cRoadDifficultyScore }}</b>
 			</div>
 		</div>
 	</div>
@@ -209,22 +233,37 @@
 	<div class="form-group">
 		<div class="row vertical-align">
 			<div class="col-xs-2">
-				<b>Rezultat (M razred):</b>
+				<b>Rezultat M:</b>
 			</div>
 			<div class="col-xs-8">
 				<span v-html="mClassStr"></span>
 			</div>
-			<div class="col-xs-2 center-middle">
+			<div class="col-xs-1 center-middle">
 				<span> Skupaj</span><br>
-				<b>{{ vws }}</b>
+				<b>{{ mVWS }}</b>
+			</div>
+
+		</div>
+	</div>
+	<hr>
+
+	<div class="form-group">
+		<div class="row vertical-align">
+			<div class="col-xs-2">
+				<b>Rezultat C:</b>
+			</div>
+			<div class="col-xs-8">
+				<span v-html="cClassStr"></span>
+			</div>
+			<div class="col-xs-1 center-middle">
+
+			</div>
+			<div class="col-xs-1 center-middle">
+				<span> Skupaj</span><br>
+				<b>{{ cVWS }}</b>
 			</div>
 		</div>
 	</div>
-
-	<!--<a href="#" class="btn btn-default btn-blue show-menu pull-left calc-btn">
-		<i class="fa fa-calculator"></i>
-		Izračunaj razred
-	</a>-->
 
 </div>
 
