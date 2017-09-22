@@ -390,3 +390,15 @@ a i,
 .section-title{
     margin-bottom: 20px;
 }
+
+/*#################################################*/
+/* HAMBURGER MENU
+/*#################################################*/
+
+.reportList{
+    width:auto;
+}
+.rep-list-item{
+    margin:5px 7px 5px 0;
+    height:20px;
+}

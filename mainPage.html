@@ -11,261 +11,421 @@
 </head>
 
 <body onload="mainPageController.defaultInstance().show()">
-<nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<div class="navbar-brand">
-				<div id="page_title">
-					Določitev M in C razreda razsvetljave
+	<div id="app">
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<nav role="navigation" id="navMenu" class="hamburger">
+					<button type="button" data-toggle="dropdown" class="btn btn-blue show-menu icon-only pull-left" aria-haspopup="true" aria-expanded="false" style="margin-top: 9px;">
+						<span class="glyphicon glyphicon-menu-hamburger"></span>
+					</button>
+					<ul class="reportList dropdown-menu">
+						<li>
+							<a class="repz" href="#" v-on:click="selectedPage = 0">
+								<strong>M in C</strong>
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="#" v-on:click="selectedPage = 1">
+								<strong>P</strong>
+							</a>
+						</li>
+					</ul>
+				</nav>
+
+				<div class="navbar-header">
+					<div class="navbar-brand">
+						<div id="page_title">
+							{{ selectedPageTitle }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<div id="busyIndicator">
+			<div class="table">
+				<div class="table-cell center-middle">
+					<div class="loader">
+						Priprava strani, prosimo počakajte... <span></span>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</nav>
 
-<div id="busyIndicator">
-	<div class="table">
-		<div class="table-cell center-middle">
-			<div class="loader">
-				Priprava strani, prosimo počakajte... <span></span>
+		<div v-if="selectedPage == 0">
+			<div class="section-title">
+				<b>Vnos vhodnih parametrov</b>
 			</div>
-		</div>
-	</div>
-</div>
 
-<div id="app">
-	<div class="section-title">
-		<b>Vnos vhodnih parametrov</b>
-	</div>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Število pasov
-			</div>
-			<div class="col-xs-10">
-				<select class="form-control" v-model="roadCategory" required>
-					<option value="0">Dvopasovna cesta</option>
-					<option value="1">Avtocesta oz. večpasovna cesta</option>
-				</select>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Omejitev hitrosti
-			</div>
-			<div class="col-xs-8">
-				<select class="form-control" v-model="speedLimit" required>
-					<option value="0">Zelo visoka (v &ge; 100 km/h)</option>
-					<option value="1">Visoka (70 < v < 100 km/h)</option>
-					<option value="2">Zmerna (40 < v < 70 km/h</option>
-					<option value="3">Nizka (v &le; 40 km/h)</option>
-				</select>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<span> VWS (M)</span><br>
-				<b>{{ mSpeedLimitScore }}</b>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<span> VWS (C)</span><br>
-				<b>{{ cSpeedLimitScore }}</b>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Gostota prometa
-			</div>
-			<div class="col-xs-8">
-				<select class="form-control" v-model="trafficDensity" required>
-					<option value="0">{{ trafficDensityHighOptionLabel }}</option>
-					<option value="1">{{ trafficDensityMediumOptionLabel }}</option>
-					<option value="2">{{ trafficDensityLowOptionLabel }}</option>
-				</select>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ mTrafficDensityScore }}</b>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ cTrafficDensityScore }}</b>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Sestava prometa
-			</div>
-			<div class="col-xs-8">
-				<select class="form-control" v-model="trafficConstitution" required>
-					<option value="0">Mešana z visoko vsebino nemotornih vozil</option>
-					<option value="1">Mešana</option>
-					<option value="2">Samo motorna</option>
-				</select>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ mTrafficConstitutionScore }}</b>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ cTrafficConstitutionScore }}</b>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Ločitev vozišča
-			</div>
-			<div class="col-xs-8">
-				<input id="cb1" type="checkbox" name="fancy-checkbox-default" autocomplete="off" v-model="laneSep">
-
-				<div class="btn-group">
-					<label for="cb1" class="btn btn-default">
-						<span class="glyphicon glyphicon-ok"></span>
-						<span> </span>
-					</label>
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Število pasov
+					</div>
+					<div class="col-xs-10">
+						<select class="form-control" v-model="roadCategory" required>
+							<option value="0">Dvopasovna cesta</option>
+							<option value="1">Avtocesta oz. večpasovna cesta</option>
+						</select>
+					</div>
 				</div>
 			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ mLaneSepScore }}</b>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ cLaneSepScore }}</b>
-			</div>
-		</div>
-	</div>
 
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Gostota prehodov čez cesto
-			</div>
-			<div class="col-xs-8">
-				<select class="form-control" v-model="crossingDensity" required>
-					<option value="0">Visoka (> 3 križišča / km in < 3 km med mostovi)</option>
-					<option value="1">Zmerna (&le; 3 križišča / km in &ge; 3 km med mostovi)</option>
-				</select>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ mCrossingDensityScore }}</b>
-			</div>
-			<div class="col-xs-1 center-middle">
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Vsebuje parkirana vozila
-			</div>
-			<div class="col-xs-8">
-				<input id="cb2" type="checkbox" name="fancy-checkbox-default" autocomplete="off"
-				       v-model="hasParkedVehicles">
-
-				<div class="btn-group">
-					<label for="cb2" class="btn btn-default">
-						<span class="glyphicon glyphicon-ok"></span>
-						<span> </span>
-					</label>
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Omejitev hitrosti
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="speedLimit" required>
+							<option value="0">Zelo visoka (v &ge; 100 km/h)</option>
+							<option value="1">Visoka (70 < v < 100 km/h)</option>
+							<option value="2">Zmerna (40 < v < 70 km/h</option>
+							<option value="3">Nizka (v &le; 40 km/h)</option>
+						</select>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<span> VWS (M)</span><br>
+						<b>{{ mSpeedLimitScore }}</b>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<span> VWS (C)</span><br>
+						<b>{{ cSpeedLimitScore }}</b>
+					</div>
 				</div>
 			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ mHasParkedVehiclesScore }}</b>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Gostota prometa
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="trafficDensity" required>
+							<option value="0">{{ trafficDensityHighOptionLabel }}</option>
+							<option value="1">{{ trafficDensityMediumOptionLabel }}</option>
+							<option value="2">{{ trafficDensityLowOptionLabel }}</option>
+						</select>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcTrafficDensityScore }}</b>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcTrafficDensityScore }}</b>
+					</div>
+				</div>
 			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ cHasParkedVehiclesScore }}</b>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Sestava prometa
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="trafficConstitution" required>
+							<option value="0">Mešana z visoko vsebino nemotornih vozil</option>
+							<option value="1">Mešana</option>
+							<option value="2">Samo motorna</option>
+						</select>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcTrafficConstitutionScore }}</b>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcTrafficConstitutionScore }}</b>
+					</div>
+				</div>
 			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Ločitev vozišča
+					</div>
+					<div class="col-xs-8">
+						<input id="cb1" type="checkbox" name="fancy-checkbox-default" autocomplete="off" v-model="laneSep">
+
+						<div class="btn-group">
+							<label for="cb1" class="btn btn-default">
+								<span class="glyphicon glyphicon-ok"></span>
+								<span> </span>
+							</label>
+						</div>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcLaneSepScore }}</b>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcLaneSepScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Gostota prehodov čez cesto
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="crossingDensity" required>
+							<option value="0">Visoka (> 3 križišča / km in < 3 km med mostovi)</option>
+							<option value="1">Zmerna (&le; 3 križišča / km in &ge; 3 km med mostovi)</option>
+						</select>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mCrossingDensityScore }}</b>
+					</div>
+					<div class="col-xs-1 center-middle">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Vsebuje parkirana vozila
+					</div>
+					<div class="col-xs-8">
+						<input id="cb2" type="checkbox" name="fancy-checkbox-default" autocomplete="off"
+						       v-model="hasParkedVehicles">
+
+						<div class="btn-group">
+							<label for="cb2" class="btn btn-default">
+								<span class="glyphicon glyphicon-ok"></span>
+								<span> </span>
+							</label>
+						</div>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcHasParkedVehiclesScore }}</b>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcHasParkedVehiclesScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Ambientna svetilnost
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="ambientLight" required>
+							<option value="0">Visoka</option>
+							<option value="1">Zmerna</option>
+							<option value="2">Nizka</option>
+						</select>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcAmbientLightScore }}</b>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcAmbientLightScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Naloga poti/ceste
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="roadDifficulty" required>
+							<option value="0">Zelo zahtevno</option>
+							<option value="1">Zahtevno</option>
+							<option value="2">Enostavno</option>
+						</select>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcRoadDifficultyScore }}</b>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<b>{{ mcRoadDifficultyScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<hr>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						<b>Rezultat M:</b>
+					</div>
+					<div class="col-xs-8">
+						<span v-html="mClassStr"></span>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<span> Skupaj</span><br>
+						<b>{{ mVWS }}</b>
+					</div>
+
+				</div>
+			</div>
+
+			<hr>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						<b>Rezultat C:</b>
+					</div>
+					<div class="col-xs-8">
+						<span v-html="cClassStr"></span>
+					</div>
+					<div class="col-xs-1 center-middle">
+
+					</div>
+					<div class="col-xs-1 center-middle">
+						<span> Skupaj</span><br>
+						<b>{{ cVWS }}</b>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div v-if="selectedPage == 1">
+			<div class="section-title">
+				<b>Vnos vhodnih parametrov</b>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Potovalna hitrost
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="pTravelSpeed" required>
+							<option value="0">Nizka (v &le; 40 km/h)</option>
+							<option value="1">Zelo nizka, hoja (zelo nizka, hoja)</option>
+						</select>
+					</div>
+					<div class="col-xs-2 center-middle">
+						<span> VWS (P)</span><br>
+						<b>{{ pTravelSpeedScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Intenzivnost uporabe
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="pUsageInt" required>
+							<option value="0">Naporno</option>
+							<option value="1">Normalno</option>
+							<option value="2">Lahkotno</option>
+						</select>
+					</div>
+					<div class="col-xs-2 center-middle">
+						<b>{{ pUsageIntScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Sestava prometa
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="pTrafficConst" required>
+							<option value="0">Pešci, kolesarji in motorna vozila</option>
+							<option value="1">Pešci in motorna vozila</option>
+							<option value="2">Samo pešci in kolesarji</option>
+							<option value="3">Samo pešci</option>
+							<option value="4">Samo kolesarji</option>
+						</select>
+					</div>
+					<div class="col-xs-2 center-middle">
+						<b>{{ pTrafficConstScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Vsebuje parkirana vozila
+					</div>
+					<div class="col-xs-8">
+						<input id="cb3" type="checkbox" name="fancy-checkbox-default" autocomplete="off"
+						       v-model="pHasParkedVehicles">
+
+						<div class="btn-group">
+							<label for="cb2" class="btn btn-default">
+								<span class="glyphicon glyphicon-ok"></span>
+								<span> </span>
+							</label>
+						</div>
+					</div>
+					<div class="col-xs-2 center-middle">
+						<b>{{ pHasParkedVehiclesScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Ambientna svetilnost
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="pAmbilight" required>
+							<option value="0">Visoka (nakupovalna okna, reklamni panoji...)</option>
+							<option value="1">Zmerna (običajna situacija)</option>
+							<option value="2">Nizka</option>
+						</select>
+					</div>
+					<div class="col-xs-2 center-middle">
+						<b>{{ pAmbilightScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						Prepoznavanje obraza
+					</div>
+					<div class="col-xs-8">
+						<select class="form-control" v-model="pFaceRecognition" required>
+							<option value="0">Potrebno</option>
+							<option value="1">Ni potrebno</option>
+						</select>
+					</div>
+					<div class="col-xs-2 center-middle">
+						<b>{{ pFaceRecognitionScore }}</b>
+					</div>
+				</div>
+			</div>
+
+			<hr>
+
+			<div class="form-group">
+				<div class="row vertical-align">
+					<div class="col-xs-2">
+						<b>Rezultat P:</b>
+					</div>
+					<div class="col-xs-8">
+						<span v-html="pClassStr"></span>
+					</div>
+					<div class="col-xs-1 center-middle">
+						<span> Skupaj</span><br>
+						<b>{{ pVWS }}</b>
+					</div>
+
+				</div>
+			</div>
+
+
 		</div>
 	</div>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Ambientna svetilnost
-			</div>
-			<div class="col-xs-8">
-				<select class="form-control" v-model="ambientLight" required>
-					<option value="0">Visoka</option>
-					<option value="1">Zmerna</option>
-					<option value="2">Nizka</option>
-				</select>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ mAmbientLightScore }}</b>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ cAmbientLightScore }}</b>
-			</div>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				Naloga poti/ceste
-			</div>
-			<div class="col-xs-8">
-				<select class="form-control" v-model="roadDifficulty" required>
-					<option value="0">Zelo zahtevno</option>
-					<option value="1">Zahtevno</option>
-					<option value="2">Enostavno</option>
-				</select>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ mRoadDifficultyScore }}</b>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<b>{{ cRoadDifficultyScore }}</b>
-			</div>
-		</div>
-	</div>
-
-	<hr>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				<b>Rezultat M:</b>
-			</div>
-			<div class="col-xs-8">
-				<span v-html="mClassStr"></span>
-			</div>
-			<div class="col-xs-1 center-middle">
-				<span> Skupaj</span><br>
-				<b>{{ mVWS }}</b>
-			</div>
-
-		</div>
-	</div>
-	<hr>
-
-	<div class="form-group">
-		<div class="row vertical-align">
-			<div class="col-xs-2">
-				<b>Rezultat C:</b>
-			</div>
-			<div class="col-xs-8">
-				<span v-html="cClassStr"></span>
-			</div>
-			<div class="col-xs-1 center-middle">
-
-			</div>
-			<div class="col-xs-1 center-middle">
-				<span> Skupaj</span><br>
-				<b>{{ cVWS }}</b>
-			</div>
-		</div>
-	</div>
-
-</div>
 
 </body>
 
