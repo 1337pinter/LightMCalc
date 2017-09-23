@@ -344,9 +344,11 @@ mainPageController = (function () {
                     },
                     pClassNo: function () {
                         var classVWS = this.pVWS < 0 ? 0 : this.pVWS;
-                        if (classVWS <= 0)
+                        var classNo = 6 - classVWS;
+
+                        if (classNo <= 0)
                             return 1;
-                        return classVWS;
+                        return classNo;
                     },
                     pClassStr: function () {
                         if (this.pClassNo >= 1 && this.pClassNo <= 7) {
