@@ -228,7 +228,7 @@ mainPageController = (function () {
                             this.mcRoadDifficultyScore;
                     },
                     cClassNo: function () {
-                        var classVWS = this.cVWS < 0 ? 0 : this.cVWS;
+                        var classVWS = this.cVWS <= 0 ? 1 : this.cVWS;
                         var classNo = 6 - classVWS;
 
                         if (classNo < 0)
@@ -344,11 +344,9 @@ mainPageController = (function () {
                     },
                     pClassNo: function () {
                         var classVWS = this.pVWS < 0 ? 0 : this.pVWS;
-                        var classNo = 6 - classVWS;
-
-                        if (classNo <= 0)
+                        if (classVWS <= 0)
                             return 1;
-                        return classNo;
+                        return classVWS;
                     },
                     pClassStr: function () {
                         if (this.pClassNo >= 1 && this.pClassNo <= 7) {
